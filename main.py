@@ -90,9 +90,19 @@ def Router(state:AgentState):
 
 
 def Coder_Node(state:AgentState):
-
-
-
+    coder_sys_prompt = load_system_prompt("Coder/coder.txt")
+    response = llm.invoke([SystemMessage(content=load_system_prompt("Supervisor/supervisor.txt")),
+                           HumanMessage(content=state["user_message"])])
+    response = response.content.strip()
+    response = response.split(",")
+    solution = ""
+    if response[0] not in ['generate_code','create_file','edit_code','rename_file','write_code','delete_file','testing']:
+        state['name'] = response[0]
+    for instruct in response:
+        if instruct == 'generate_code':
+            if state["name"] != "" and solution != "":
+        if instruct == 'create_file':
+    state["intent"] = "testing"
     return state
 
 

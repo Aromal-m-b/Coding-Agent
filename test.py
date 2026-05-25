@@ -1,28 +1,19 @@
-from typing import TypedDict
+class Solution:
+    def check(self, nums: list[int]) -> bool:
+        if len(nums) < 2:
+            return True
+        else:
+            temp = nums[0]
+            for i in range(1,len(nums)):
+                if temp>nums[i]:
+                    if nums[i:len(nums)] + nums[0:i]  == sorted(nums):
+                        print(nums[i:len(nums)] + nums[0:i])
+                        return True
+                    break
+                if i == len(nums)-1:
+                    return True
+                temp = nums[i]
+        return False
 
-class AgentState(TypedDict):
-    messages:list[str]
-    intent:str
-    complexity:str
-    test_status:str
-    agent_stat:str
-
-def Supervisor_Node(state:AgentState):
-    if state["intent"] == None:
-        print("Starting Coding Agent")
-        state["intent"] = "test"
-    else:
-        print("Coding Agent Running ")
-
-    return state
-
-state = {
-    "messages":[],
-    "intent":None,
-    "complexity":None,
-    "test_status":None,
-    "agent_stat":None
-}
-state = Supervisor_Node(state)
-Supervisor_Node(state)
-print(state)
+obj = Solution()
+print(obj.check([1,4,1,2,3,5]))
